@@ -7,13 +7,14 @@ const port = 8080;
 
 // Setup provider server to verify
 const app = require('express')();
+const authMiddleware = require('../middleware/auth.middleware');
+app.use(authMiddleware);
 app.use(require('./product.routes'));
 const server = app.listen(port);
 
 describe("Pact Verification", () => {
     it("Validates the expectations of ProductService", () => {
         const baseOpts = {
-            logLevel: "INFO",
             providerBaseUrl: `${url + port}`,
             providerVersion: '1.0.0',
             provider: "Provider",
@@ -48,6 +49,7 @@ describe("Pact Verification", () => {
         return new Verifier(opts).verifyProvider()
             .then(output => {
                 console.log("Pact Verification Complete!")
+                console.log(output)
             })
             .finally(() => {
                 server.close();
