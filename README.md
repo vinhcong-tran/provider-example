@@ -11,28 +11,40 @@ An example test framework using Pact-js to test Provider
 This step to help you to manually start the server in case you need to verify the application can connect to this server manually. In case running pact test, we have handled the script to automatically start the server, so you can ignore this step when running Pact test.
 
    `npm start`
+   
+Your can visit `http://localhost:8080/products` on your browser to make sure the server started successfully. The browser should show the data as below:
+
+`[{"id":"09","type":"CREDIT_CARD","name":"Gem Visa","version":"v1"},{"id":"10","type":"CREDIT_CARD","name":"28 Degrees","version":"v1"},{"id":"11","type":"PERSONAL_LOAN","name":"MyFlexiPay","version":"v2"}]`
 
 ## Running Pact test
 
-Before running the test, please make sure that you have published the contract to the broker from Consumer.
+### 1. Pre-conditions:
 
-We will start a server on port `8080`. Please make sure this port is available.
+- Before running the test, please make sure that you have published the contract to the broker from Consumer.
 
-We are using [Pactflow](https://pactflow.io/) as a broker. To use Pactflow , register for their free developer plan and export your Pactflow Broker URL and API token:
+- We will start a server on port `8080`. Please make sure this port is available.
 
+- We are using [Pactflow](https://pactflow.io/) as a broker. To use Pactflow , register for their free developer plan and export your Pactflow Broker URL and API token (You can find the API token in the pactflow site after logging in: Settings -> Read/write token):
+
+Mac OS
 ```
-export PACT_BROKER_URL=<PACT_BROKER_URL here>
-export PACT_BROKER_TOKEN=<API_TOKEN here>
+export PACT_BROKER_URL=<PACT_BROKER_URL>
+export PACT_BROKER_TOKEN=<API_TOKEN>
+```
+Windows
+```
+set PACT_BROKER_URL=<PACT_BROKER_URL>
+set PACT_BROKER_TOKEN=<API_TOKEN>
 ```
 
-### Running test
+### 2. Running test
 
-1. Run test
+- Run test
 
     `npm run test:pact`
 
-2. Visit to the `PACT_BROKER_URL` to observe the test result.
-- The status will be "Successfully verified" if the test passed
-- The status will be "Verification failed" if the test failed
+- Visit to the `PACT_BROKER_URL` to observe the test results.
+   - The status will be "Successfully verified" if the test passed
+   - The status will be "Verification failed" if the test failed
 
 
