@@ -17,8 +17,8 @@ We will start a server on port `8080`. Please make sure this port is available.
 We are using [Pactflow](https://pactflow.io/) as a broker. To use Pactflow , register for their free developer plan and export your Pactflow Broker URL and API token:
 
 ```
-export PACT_BROKER_URL=<PACT_BROKER_URL here>
-export PACT_BROKER_TOKEN=<API_TOKEN here>
+export PACT_BROKER_URL=https://vinhtran.pactflow.io
+export PACT_BROKER_TOKEN=hRNV4Brlh3FFwDJXTkpMLQ
 ```
 
 ### Running test
