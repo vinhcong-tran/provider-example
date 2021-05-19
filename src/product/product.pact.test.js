@@ -7,8 +7,6 @@ const port = 8080;
 
 // Setup provider server to verify
 const app = require('express')();
-const authMiddleware = require('../middleware/auth.middleware');
-app.use(authMiddleware);
 app.use(require('./product.routes'));
 const server = app.listen(port);
 
@@ -31,19 +29,9 @@ describe("Pact Verification", () => {
             },
         }
 
-        const requestFilter = (req, res, next) => {
-            if (!req.headers["authorization"]) {
-                next();
-                return;
-            }
-            req.headers["authorization"] = `Bearer ${new Date().toISOString()}`;
-            next();
-        }
-
         const opts = {
             ...baseOpts,
-            stateHandlers: stateHandlers,
-            requestFilter: requestFilter
+            stateHandlers: stateHandlers
         };
 
         return new Verifier(opts).verifyProvider()
