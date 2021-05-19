@@ -2,6 +2,10 @@
 
 An example test framework using Pact-js to test Provider
 
+## Install Dependencies
+
+`npm i`
+
 ## Running Server
 
 This step to help you to manually start the server in case you need to verify the application can connect to this server manually. In case running pact test, we have handled the script to automatically start the server, so you can ignore this step when running Pact test.
@@ -23,15 +27,11 @@ export PACT_BROKER_TOKEN=<API_TOKEN here>
 
 ### Running test
 
-1. Install dependencies
-
-    `npm i`
-
-2. Run test
+1. Run test
 
     `npm run test:pact`
 
-3. Visit to the `PACT_BROKER_URL` to observe the test result.
+2. Visit to the `PACT_BROKER_URL` to observe the test result.
 - The status will be "Successfully verified" if the test passed
 - The status will be "Verification failed" if the test failed
 
