@@ -12,7 +12,7 @@ This step to help you to manually start the server in case you need to verify th
 
    `npm start`
    
-Your can visit `http://localhost:4321/products` on your browser to make sure the server started successfully. The browser should show the data as below:
+Your can visit `http://localhost:8080/products` on your browser to make sure the server started successfully. The browser should show the data as below:
 
 `[{"id":"09","type":"CREDIT_CARD","name":"Gem Visa","version":"v1"},{"id":"10","type":"CREDIT_CARD","name":"28 Degrees","version":"v1"},{"id":"11","type":"PERSONAL_LOAN","name":"MyFlexiPay","version":"v2"}]`
 
