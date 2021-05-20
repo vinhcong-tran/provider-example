@@ -3,7 +3,7 @@ const controller = require('./product.controller');
 const Product = require('./product');
 
 const url = 'http://localhost:';
-const port = 8080;
+const port = 4321;
 
 // Setup provider server to verify
 const app = require('express')();
@@ -23,9 +23,7 @@ describe("Pact Verification", () => {
 
         const stateHandlers = {
             "products exist": () => {
-                controller.repository.products = new Map([
-                    ["10", new Product("10", "CREDIT_CARD", "28 Degrees")]
-                ]);
+                // The default state of repository, it will get all products from the repository to verify the contract.
             },
         }
 
