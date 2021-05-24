@@ -8,7 +8,7 @@ const url = 'http://localhost:';
 const port = 4321;
 
 const gitBranch = exec.execSync('git branch --show-current').toString().trim();
-
+const gitHash = exec.execSync('git rev-parse --short HEAD').toString().trim();
 
 // Setup provider server to verify
 const app = require('express')();
@@ -21,7 +21,7 @@ describe("Pact Verification", () => {
     it("Validates the expectations of getting all products api", () => {
         const baseOpts = {
             providerBaseUrl: `${url + port}`,
-            providerVersion: '1.0.0',
+            providerVersion: gitHash,
             provider: process.env.PROVIDER_NAME,
             pactBrokerUrl: process.env.PACT_BROKER_URL,
             pactBrokerToken: process.env.PACT_BROKER_TOKEN,
