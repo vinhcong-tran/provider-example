@@ -1,9 +1,14 @@
 const { Verifier } = require('@pact-foundation/pact');
 const controller = require('../src/product/product.controller');
 const Product = require('../src/product/product');
+const exec = require('child_process');
+require('dotenv').config()
 
 const url = 'http://localhost:';
 const port = 4321;
+
+const gitBranch = exec.execSync('git branch --show-current').toString().trim();
+
 
 // Setup provider server to verify
 const app = require('express')();
@@ -17,7 +22,7 @@ describe("Pact Verification", () => {
         const baseOpts = {
             providerBaseUrl: `${url + port}`,
             providerVersion: '1.0.0',
-            provider: "Provider",
+            provider: process.env.PROVIDER_NAME,
             pactBrokerUrl: process.env.PACT_BROKER_URL,
             pactBrokerToken: process.env.PACT_BROKER_TOKEN,
             publishVerificationResult: true
@@ -73,10 +78,19 @@ describe("Pact Verification", () => {
             next();
         }
 
+        const consumerVersionSelectors = [
+            {
+                consumer: process.env.CONSUMER_NAME,
+                tag: gitBranch,
+                latest: true
+            }
+        ]
+
         const opts = {
             ...baseOpts,
             stateHandlers: stateHandlers,
-            requestFilter: requestFilter
+            requestFilter: requestFilter,
+            consumerVersionSelectors: consumerVersionSelectors
         };
 
         return new Verifier(opts).verifyProvider()
