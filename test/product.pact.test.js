@@ -25,7 +25,8 @@ describe("Pact Verification", () => {
             provider: process.env.PROVIDER_NAME,
             pactBrokerUrl: process.env.PACT_BROKER_URL,
             pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-            publishVerificationResult: true
+            publishVerificationResult: true,
+            providerVersionTags: gitBranch
         }
 
         const stateHandlers = {
