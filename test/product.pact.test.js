@@ -1,6 +1,7 @@
+const getAllProducts = require('../test/states/getAllProducts');
+const getProductsName = require('../test/states/getProductsName');
+const getOneProduct = require('../test/states/getOneProduct');
 const { Verifier } = require('@pact-foundation/pact');
-const controller = require('../src/product/product.controller');
-const Product = require('../src/product/product');
 const exec = require('child_process');
 require('dotenv').config()
 
@@ -28,46 +29,7 @@ describe("Pact Verification", () => {
             publishVerificationResult: true
         }
 
-        const stateHandlers = {
-            // States for get all products API
-            "all products exist": () => {
-                // The default state of repository, it will get all products from the repository to verify the contract.
-            },
-            "no product exists": () => {
-                controller.repository.products = new Map();
-            },
-            "no auth token when getting all products": () => {
-                // The default state of repository, it will get all products from the repository to verify the contract.
-            },
-
-            // States for get products name API
-            "products name exist": () => {
-                controller.repository.products = new Map([
-                    ["09", new Product("09", "CREDIT_CARD", "Gem Visa", "v1")],
-                    ["10", new Product("10", "CREDIT_CARD", "28 Degrees", "v1")],
-                    ["11", new Product("11", "PERSONAL_LOAN", "MyFlexiPay", "v2")]
-                ]);
-            },
-            "no product name exists": () => {
-                controller.repository.products = new Map();
-            },
-            "no auth token when getting product name": () => {
-                // The default state of repository, it will get all products from the repository to verify the contract.
-            },
-
-            // States for get one product API
-            "product with ID 10 exists": () => {
-                controller.repository.products = new Map([
-                    ["10", new Product("10", "CREDIT_CARD", "28 Degrees", "v1")]
-                ]);
-            },
-            "product with ID 12 does not exist": () => {
-                // The default state of repository, it will get all products from the repository to verify the contract.
-            },
-            "no auth token when getting one product": () => {
-                // The default state of repository, it will get all products from the repository to verify the contract.
-            }
-        }
+        const stateHandlers = Object.assign(getAllProducts, getProductsName, getOneProduct);
 
         const requestFilter = (req, res, next) => {
             if (!req.headers["authorization"]) {
@@ -96,7 +58,6 @@ describe("Pact Verification", () => {
         return new Verifier(opts).verifyProvider()
             .then(output => {
                 console.log("Pact Verification Complete!")
-                // console.log(output)
             })
             .finally(() => {
                 server.close();
